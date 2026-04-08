@@ -6,8 +6,6 @@ from pydantic import BaseModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
-MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.2"
-
 app = FastAPI()
 
 app.add_middleware(
@@ -20,18 +18,34 @@ app.add_middleware(
 
 class ChatRequest(BaseModel):
     messages: list[dict]  # [{ "role": "user" | "assistant" | "system", "content": "..." }]
+    model: str | None = "ensemble"  # "mistral", "llama3", "gemma", or "ensemble"
 
 class ChatResponse(BaseModel):
     reply: str
-
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL_NAME,
-    torch_dtype=torch.float16,
-    device_map="auto"
-)
+    used_models: list[str]
 
 SYSTEM_PROMPT = "You are a helpful, precise open-source AI assistant."
+
+MODEL_CONFIGS = {
+    "mistral": "mistralai/Mistral-7B-Instruct-v0.2",
+    "llama3": "meta-llama/Llama-3-8B-Instruct",
+    "gemma": "google/gemma-7b-it",
+}
+
+MODELS = {}
+
+def load_model(key: str):
+    if key in MODELS:
+        return MODELS[key]
+    name = MODEL_CONFIGS[key]
+    tokenizer = AutoTokenizer.from_pretrained(name)
+    model = AutoModelForCausalLM.from_pretrained(
+        name,
+        torch_dtype=torch.float16,
+        device_map="auto"
+    )
+    MODELS[key] = (tokenizer, model)
+    return MODELS[key]
 
 def build_prompt(messages: list[dict]) -> str:
     parts = [f"<s>[SYSTEM] {SYSTEM_PROMPT}"]
@@ -47,9 +61,9 @@ def build_prompt(messages: list[dict]) -> str:
     parts.append("\n[ASSISTANT]")
     return "".join(parts)
 
-@app.post("/api/chat", response_model=ChatResponse)
-def chat(req: ChatRequest):
-    prompt = build_prompt(req.messages)
+def generate_with_model(model_key: str, messages: list[dict]) -> str:
+    tokenizer, model = load_model(model_key)
+    prompt = build_prompt(messages)
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     with torch.no_grad():
         output_ids = model.generate(
@@ -65,7 +79,32 @@ def chat(req: ChatRequest):
         reply = full_text.split("[ASSISTANT]", 1)[1].strip()
     else:
         reply = full_text.strip()
-    return ChatResponse(reply=reply)
+    return reply
+
+@app.post("/api/chat", response_model=ChatResponse)
+def chat(req: ChatRequest):
+    target = (req.model or "ensemble").lower()
+
+    if target == "ensemble":
+        used = []
+        replies = []
+        for key in MODEL_CONFIGS.keys():
+            try:
+                r = generate_with_model(key, req.messages)
+                replies.append(f"[{key}] {r}")
+                used.append(key)
+            except Exception:
+                continue
+        if not replies:
+            return ChatResponse(reply="All models failed to respond.", used_models=[])
+        merged = "\n\n".join(replies)
+        return ChatResponse(reply=merged, used_models=used)
+
+    if target not in MODEL_CONFIGS:
+        target = "mistral"
+
+    reply = generate_with_model(target, req.messages)
+    return ChatResponse(reply=reply, used_models=[target])
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000)
