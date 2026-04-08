@@ -10,203 +10,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-  <style>
-    * { box-sizing: border-box; }
-
-    :root {
-      --bw-bg: #02030a;
-      --bw-panel: #050716;
-      --bw-border: #262a3a;
-      --bw-text: #f5f5f5;
-      --bw-muted: #a0a4b8;
-      --bw-accent: #ffffff;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Playfair Display", system-ui, sans-serif;
-      background:
-        radial-gradient(circle at 10% 20%, #1a1f3a 0, transparent 40%),
-        radial-gradient(circle at 80% 0%, #2b1c3f 0, transparent 45%),
-        radial-gradient(circle at 50% 100%, #101322 0, transparent 50%),
-        var(--bw-bg);
-      color: var(--bw-text);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px;
-    }
-
-    .boardwalk-shell {
-      width: 100%;
-      max-width: 900px;
-      background: linear-gradient(145deg, rgba(5,7,22,0.96), rgba(3,4,12,0.98));
-      border: 1px solid var(--bw-border);
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.03),
-        0 24px 80px rgba(0,0,0,0.9);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .boardwalk-shell::before,
-    .boardwalk-shell::after {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.08) 0, transparent 55%),
-        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.06) 0, transparent 55%);
-      opacity: 0.12;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .boardwalk-shell::after {
-      background-image:
-        radial-gradient(circle at 30% 0%, rgba(255,255,255,0.08) 0, transparent 55%),
-        radial-gradient(circle at 90% 60%, rgba(255,255,255,0.06) 0, transparent 55%);
-      opacity: 0.18;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .title {
-      font-family: "Dancing Script", cursive;
-      font-size: 2.6rem;
-      letter-spacing: 0.08em;
-      color: var(--bw-accent);
-    }
-
-    .subtitle {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--bw-muted);
-      margin-top: -6px;
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      color: var(--bw-accent);
-    }
-
-    .messages {
-      flex: 1;
-      min-height: 400px;
-      overflow-y: auto;
-      padding: 16px;
-      border-radius: 18px;
-      background: radial-gradient(circle at 0 0, rgba(255,255,255,0.04), transparent 55%), var(--bw-panel);
-      border: 1px solid var(--bw-border);
-      backdrop-filter: blur(10px);
-    }
-
-    .msg {
-      margin-bottom: 12px;
-      padding: 10px 14px;
-      border-radius: 14px;
-      max-width: 90%;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 1rem;
-      line-height: 1.55;
-    }
-
-    .msg.user {
-      margin-left: auto;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    .msg.assistant {
-      margin-right: auto;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .input-row {
-      display: flex;
-      gap: 12px;
-    }
-
-    textarea {
-      flex: 1;
-      resize: none;
-      min-height: 70px;
-      max-height: 200px;
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid var(--bw-border);
-      background: rgba(2,3,10,0.9);
-      color: var(--bw-text);
-      font-family: inherit;
-      font-size: 1rem;
-      outline: none;
-    }
-
-    textarea::placeholder {
-      color: var(--bw-muted);
-    }
-
-    button {
-      padding: 0 20px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.1);
-      color: var(--bw-accent);
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      cursor: pointer;
-      min-width: 100px;
-      transition: 0.1s ease-out;
-    }
-
-    button:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.7);
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: default;
-    }
-
-    .footer {
-      text-align: right;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      color: var(--bw-muted);
-      text-transform: uppercase;
-    }
-  </style>
+  <!-- YOUR CSS FILE -->
+  <link rel="stylesheet" href="bw.css" />
 </head>
 
 <body>
   <div class="boardwalk-shell">
+
     <div class="header">
-      <div>
-        <div class="title">Boardwalk AI</div>
-        <div class="subtitle">Black & White Space Console</div>
-      </div>
-      <div class="badge">Local · Open Source</div>
+      <div class="title">Boardwalk AI</div>
     </div>
 
     <div id="messages" class="messages"></div>
@@ -216,7 +28,6 @@
       <button id="send">Send</button>
     </div>
 
-    <div class="footer">Boardwalk AI · Drop‑In Panel</div>
   </div>
 
   <script src="app.js"></script>
