@@ -3,23 +3,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Boardwalk AI – Builder Console</title>
+  <title>Boardwalk AI – App Builder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="bw.css" />
 </head>
 <body>
   <div class="boardwalk-shell">
     <div class="header">
-      <div class="title">Boardwalk AI</div>
+      <div class="title">Boardwalk AI – App Builder</div>
     </div>
 
     <!-- Builder controls -->
-    <div class="input-row" style="margin-bottom:8px; gap:8px;">
+    <div class="input-row" style="margin-bottom:8px; gap:8px; flex-wrap:wrap;">
       <select id="stack-select">
         <option value="react-node">React + Node</option>
         <option value="react-fastapi">React + FastAPI</option>
@@ -29,13 +29,30 @@
       <button id="scaffold-btn">Scaffold App</button>
     </div>
 
+    <div class="input-row" style="margin-bottom:8px; gap:8px; flex-wrap:wrap;">
+      <input id="db-name" placeholder="db name (rollshow)" />
+      <textarea id="db-schema" placeholder="SQL schema here..."></textarea>
+      <button id="db-btn">Create DB Schema</button>
+    </div>
+
+    <div class="input-row" style="margin-bottom:8px; gap:8px; flex-wrap:wrap;">
+      <input id="r2-name" placeholder="R2 bucket name (rollshow-media)" />
+      <button id="r2-btn">Create R2 Config</button>
+    </div>
+
+    <div class="input-row" style="margin-bottom:8px; gap:8px; flex-wrap:wrap;">
+      <input id="api-project" placeholder="project name (rollshow)" />
+      <textarea id="api-spec" placeholder="API spec (e.g. POST /uploadShow, GET /shows, ...)"></textarea>
+      <button id="api-btn">Generate API Backend</button>
+    </div>
+
     <!-- Messages -->
     <div id="messages" class="messages"></div>
 
-    <!-- Chat input -->
+    <!-- Chat input (for future LLM wiring) -->
     <div class="input-row">
-      <textarea id="input" placeholder="Ask Boardwalk AI or describe an app..."></textarea>
-      <button id="send">Send</button>
+      <textarea id="input" placeholder="Describe an app or leave notes..."></textarea>
+      <button id="send">Log Note</button>
     </div>
   </div>
 
