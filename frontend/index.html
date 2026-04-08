@@ -1,35 +1,44 @@
+<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Boardwalk AI</title>
+  <title>Boardwalk AI – Builder Console</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- YOUR CSS FILE -->
   <link rel="stylesheet" href="bw.css" />
 </head>
-
 <body>
   <div class="boardwalk-shell">
-
     <div class="header">
       <div class="title">Boardwalk AI</div>
     </div>
 
-    <div id="messages" class="messages"></div>
-
-    <div class="input-row">
-      <textarea id="input" placeholder="Ask Boardwalk AI anything..."></textarea>
-      <button id="send">Send</button>
+    <!-- Builder controls -->
+    <div class="input-row" style="margin-bottom:8px; gap:8px;">
+      <select id="stack-select">
+        <option value="react-node">React + Node</option>
+        <option value="react-fastapi">React + FastAPI</option>
+        <option value="svelte-worker">Svelte + Cloudflare Worker</option>
+      </select>
+      <input id="app-name" placeholder="app-name" />
+      <button id="scaffold-btn">Scaffold App</button>
     </div>
 
+    <!-- Messages -->
+    <div id="messages" class="messages"></div>
+
+    <!-- Chat input -->
+    <div class="input-row">
+      <textarea id="input" placeholder="Ask Boardwalk AI or describe an app..."></textarea>
+      <button id="send">Send</button>
+    </div>
   </div>
 
-  <script src="/backend/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
