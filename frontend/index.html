@@ -1,0 +1,101 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Open Source AI Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #05060a;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px;
+      gap: 12px;
+    }
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      border-radius: 12px;
+      background: #0c0f18;
+      border: 1px solid #222636;
+    }
+    .msg {
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      max-width: 90%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .msg.user {
+      background: #1b3a5f;
+      align-self: flex-end;
+    }
+    .msg.assistant {
+      background: #1b2a3a;
+      align-self: flex-start;
+    }
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    textarea {
+      flex: 1;
+      resize: none;
+      min-height: 60px;
+      max-height: 160px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #222636;
+      background: #05060a;
+      color: #f5f5f5;
+      font-family: inherit;
+    }
+    button {
+      padding: 0 16px;
+      border-radius: 8px;
+      border: none;
+      background: #3b82f6;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      min-width: 80px;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+    .header {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="header">Open Source Local AI</div>
+    <div id="messages" class="messages"></div>
+    <div class="input-row">
+      <textarea id="input" placeholder="Say something..."></textarea>
+      <button id="send">Send</button>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
