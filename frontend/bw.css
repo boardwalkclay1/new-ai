@@ -1,0 +1,237 @@
+/* frontend/boardwalk-ai.css */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bw-bg: #02030a;
+  --bw-bg-panel: #050716;
+  --bw-border: #262a3a;
+  --bw-accent: #ffffff;
+  --bw-accent-soft: #b3b9ff;
+  --bw-text-main: #f5f5f5;
+  --bw-text-muted: #a0a4b8;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Playfair Display", "Dancing Script", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(circle at 10% 20%, #1a1f3a 0, transparent 40%),
+    radial-gradient(circle at 80% 0%, #2b1c3f 0, transparent 45%),
+    radial-gradient(circle at 50% 100%, #101322 0, transparent 50%),
+    var(--bw-bg);
+  color: var(--bw-text-main);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.boardwalk-shell {
+  width: 100%;
+  max-width: 960px;
+  margin: 24px 16px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--bw-border);
+  background: linear-gradient(145deg, rgba(5, 7, 22, 0.96), rgba(3, 4, 12, 0.98));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 24px 80px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.boardwalk-shell::before,
+.boardwalk-shell::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.08) 0, transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.06) 0, transparent 55%);
+  opacity: 0.12;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.boardwalk-shell::after {
+  background-image:
+    radial-gradient(circle at 30% 0%, rgba(255, 255, 255, 0.08) 0, transparent 55%),
+    radial-gradient(circle at 90% 60%, rgba(255, 255, 255, 0.06) 0, transparent 55%);
+  opacity: 0.18;
+}
+
+.boardwalk-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.boardwalk-title {
+  font-family: "Dancing Script", "Playfair Display", cursive;
+  font-size: 2.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bw-accent);
+}
+
+.boardwalk-title span {
+  display: inline-block;
+  background: linear-gradient(120deg, #ffffff, #d0d4ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.boardwalk-subtitle {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--bw-text-muted);
+}
+
+.boardwalk-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--bw-accent-soft);
+  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.12), transparent 55%);
+}
+
+.boardwalk-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 360px;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 14px 10px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.04), transparent 55%), var(--bw-bg-panel);
+  border: 1px solid var(--bw-border);
+  backdrop-filter: blur(10px);
+}
+
+.msg {
+  margin-bottom: 10px;
+  padding: 9px 11px;
+  border-radius: 12px;
+  max-width: 90%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.msg.user {
+  margin-left: auto;
+  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.12), transparent 55%), #050814;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.msg.assistant {
+  margin-right: auto;
+  background: rgba(5, 7, 22, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+  min-height: 64px;
+  max-height: 160px;
+  padding: 10px 11px;
+  border-radius: 14px;
+  border: 1px solid var(--bw-border);
+  background: rgba(2, 3, 10, 0.9);
+  color: var(--bw-text-main);
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+textarea::placeholder {
+  color: var(--bw-text-muted);
+}
+
+textarea:focus {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+button {
+  padding: 0 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.18), transparent 55%), #050814;
+  color: var(--bw-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  min-width: 96px;
+  transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, background 0.12s ease-out;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.7);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.boardwalk-footer {
+  margin-top: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--bw-text-muted);
+  text-align: right;
+}
+
+/* small screens */
+@media (max-width: 640px) {
+  .boardwalk-shell {
+    margin: 12px 10px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+  .boardwalk-title {
+    font-size: 1.6rem;
+  }
+  .boardwalk-subtitle {
+    display: none;
+  }
+}
